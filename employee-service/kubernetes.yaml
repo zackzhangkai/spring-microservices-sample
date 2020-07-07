@@ -50,7 +50,7 @@ spec:
               until nc -z eureka-sample 8761; do echo "waiting for
                             eureka"; sleep 2; done;
       containers:
-        - image: runzexia/employee-sample:latest
+        - image: shaowenchen/employee-sample:latest
           readinessProbe:
             httpGet:
               path: /actuator/health
