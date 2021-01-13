@@ -43,7 +43,7 @@ spec:
                             config"; sleep 2; done;
       containers:
         - name: eureka
-          image: shaowenchen/eureka-sample:latest
+          image: zackzhangkai/eureka-sample:latest
           ports:
             - containerPort: 8761
           resources:

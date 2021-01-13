@@ -50,7 +50,7 @@ spec:
               until nc -z eureka-sample.kubesphere-springcloud-sample.svc 8761; do echo "waiting for
                             eureka"; sleep 2; done;
       containers:
-        - image: shaowenchen/proxy-sample:latest
+        - image: zackzhangkai/proxy-sample:latest
           readinessProbe:
             httpGet:
               path: /actuator/health

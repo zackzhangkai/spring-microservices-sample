@@ -33,7 +33,7 @@ spec:
         version: master-$BUILD_NUMBER
     spec:
       containers:
-        - image: shaowenchen/config-sample:latest
+        - image: zackzhangkai/config-sample:latest
           readinessProbe:
             httpGet:
               path: /actuator/health
