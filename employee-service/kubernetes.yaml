@@ -39,7 +39,7 @@ spec:
             - sh
             - '-c'
             - >-
-              until nc -z config-sample.kubesphere-springcloud-sample.svc 8080; do echo "waiting for
+              until nc -z config-sample 8080; do echo "waiting for
                             config"; sleep 2; done;
         - name: wait-eureka
           image: 'busybox:1.28.4'
@@ -47,7 +47,7 @@ spec:
             - sh
             - '-c'
             - >-
-              until nc -z eureka-sample.kubesphere-springcloud-sample.svc 8761; do echo "waiting for
+              until nc -z eureka-sample 8761; do echo "waiting for
                             eureka"; sleep 2; done;
       containers:
         - image: zackzhangkai/employee-sample:latest

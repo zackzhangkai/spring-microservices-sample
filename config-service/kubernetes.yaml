@@ -51,7 +51,7 @@ spec:
             periodSeconds: 5
             initialDelaySeconds: 180
           env:
-            - name: PORT
+            - name: PORT  # 设置了PORT变量，服务端口变成8080
               value: "8080"
           imagePullPolicy: Always
           name: config-sample

@@ -1,2 +1,3 @@
 server:
-  port: ${PORT:8088}
+  port: ${PORT:8088} # 读取PORT变量，不存在则使用8088端口
+spring.profiles.active: native
