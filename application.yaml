@@ -1,0 +1,30 @@
+# wordpress.yaml
+apiVersion: app.k8s.io/v1beta1
+kind: Application
+metadata:
+  annotations:
+    kubesphere.io/creator: admin
+    servicemesh.kubesphere.io/enabled: "true"
+  labels:
+    app.kubernetes.io/name: springcloud-microservice
+    app.kubernetes.io/version: v1
+  name: kubesphere-springcloud-sample
+spec:
+  addOwnerRef: true
+  componentKinds:
+  - group: ""
+    kind: Service
+  - group: apps
+    kind: Deployment
+  - group: apps
+    kind: StatefulSet
+  - group: extensions
+    kind: Ingress
+  - group: servicemesh.kubesphere.io
+    kind: Strategy
+  - group: servicemesh.kubesphere.io
+    kind: ServicePolicy
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: springcloud-microservice
+      app.kubernetes.io/version: v1
