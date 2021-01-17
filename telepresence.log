@@ -1,0 +1,688 @@
+   0.0 TEL | Telepresence 0.105 launched at Sun Jan 17 08:41:59 2021
+   0.0 TEL |   /usr/local/bin/telepresence --swap-deployment ks-controller-manager --namespace kubesphere-system
+   0.0 TEL | uname: uname_result(system='Darwin', node='zack', release='19.6.0', version='Darwin Kernel Version 19.6.0: Mon Aug 31 22:12:52 PDT 2020; root:xnu-6153.141.2~1/RELEASE_X86_64', machine='x86_64')
+   0.0 TEL | Platform: darwin
+   0.0 TEL | WSL: False
+   0.0 TEL | Python 3.9.0 (default, Oct 27 2020, 14:15:17)
+   0.0 TEL | [Clang 12.0.0 (clang-1200.0.32.21)]
+   0.1 TEL | BEGIN SPAN main.py:40(main)
+   0.1 TEL | BEGIN SPAN startup.py:83(set_kube_command)
+   0.1 TEL | Found kubectl -> /usr/local/bin/kubectl
+   0.1 TEL | [1] Capturing: kubectl config current-context
+   0.2 TEL | [1] captured in 0.12 secs.
+   0.2 TEL | [2] Capturing: kubectl --context kubernetes-admin@cluster.local version --short
+   0.6 TEL | [2] captured in 0.36 secs.
+   0.6 TEL | [3] Capturing: kubectl --context kubernetes-admin@cluster.local config view -o json
+   0.7 TEL | [3] captured in 0.06 secs.
+   0.7 TEL | [4] Capturing: kubectl --context kubernetes-admin@cluster.local get ns kubesphere-system
+   0.9 TEL | [4] captured in 0.20 secs.
+   0.9 TEL | [5] Capturing: kubectl --context kubernetes-admin@cluster.local api-versions
+   1.3 TEL | [5] captured in 0.44 secs.
+   1.3 TEL | Command: kubectl 1.19.4
+   1.3 TEL | Context: kubernetes-admin@cluster.local, namespace: kubesphere-system, version: 1.17.9
+   1.3 TEL | Warning: kubectl 1.19.4 may not work correctly with cluster version 1.17.9 due to the version discrepancy. See https://kubernetes.io/docs/setup/version-skew-policy/ for more information.
+   1.3 TEL | END SPAN startup.py:83(set_kube_command)    1.2s
+   1.3 TEL | Found ssh -> /usr/bin/ssh
+   1.3 TEL | [6] Capturing: ssh -V
+   1.3 TEL | [6] captured in 0.01 secs.
+   1.3 TEL | Found bash -> /bin/bash
+   1.3 TEL | Found sshuttle-telepresence -> /usr/local/Cellar/telepresence/0.105/libexec/sshuttle-telepresence
+   1.3 TEL | Found pfctl -> /sbin/pfctl
+   1.3 TEL | Found sudo -> /usr/bin/sudo
+   1.3 TEL | [7] Running: sudo -n echo -n
+   1.4 TEL | [7] ran in 0.04 secs.
+   1.4 >>> | Starting proxy with method 'vpn-tcp', which has the following limitations: All processes are affected, only one telepresence can run per machine, and you can't use other VPNs. You may need to add cloud hosts and headless services with --also-proxy. For a full list of method limitations see https://telepresence.io/reference/methods.html
+   1.4 TEL | Found sshfs -> /usr/local/bin/sshfs
+   1.4 TEL | Found umount -> /sbin/umount
+   1.4 >>> | Volumes are rooted at $TELEPRESENCE_ROOT. See https://telepresence.io/howto/volumes.html for details.
+   1.4 TEL | [8] Running: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pods telepresence-connectivity-check --ignore-not-found
+   1.6 TEL | [8] ran in 0.21 secs.
+   3.0 TEL | Scout info: {'latest_version': '0.108', 'application': 'telepresence', 'notices': []}
+   3.0 TEL | BEGIN SPAN deployment.py:283(supplant_deployment)
+   3.0 >>> | Starting network proxy to cluster by swapping out Deployment ks-controller-manager with a proxy
+   3.0 TEL | BEGIN SPAN remote.py:75(get_deployment_json)
+   3.0 TEL | [9] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get deployment -o json ks-controller-manager
+   3.2 TEL | [9] captured in 0.18 secs.
+   3.2 TEL | END SPAN remote.py:75(get_deployment_json)    0.2s
+   3.2 TEL | [10] Running: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system delete deployment ks-controller-man-65921e7ff08e447c99370466c5d0ca7b --ignore-not-found
+   3.4 TEL | [10] ran in 0.22 secs.
+   3.4 TEL | [11] Running: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system apply -f -
+   4.0  11 | deployment.apps/ks-controller-man-65921e7ff08e447c99370466c5d0ca7b created
+   4.0 TEL | [11] ran in 0.51 secs.
+   4.0 TEL | [12] Running: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system scale deployment ks-controller-manager --replicas=0
+   4.2  12 | deployment.apps/ks-controller-manager scaled
+   4.2 TEL | [12] ran in 0.23 secs.
+   4.2 TEL | END SPAN deployment.py:283(supplant_deployment)    1.1s
+   4.2 TEL | BEGIN SPAN remote.py:142(get_remote_info)
+   4.2 TEL | BEGIN SPAN remote.py:75(get_deployment_json)
+   4.2 TEL | [13] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get deployment -o json --selector=telepresence=65921e7ff08e447c99370466c5d0ca7b
+   4.4 TEL | [13] captured in 0.20 secs.
+   4.4 TEL | END SPAN remote.py:75(get_deployment_json)    0.2s
+   4.4 TEL | Searching for Telepresence pod:
+   4.4 TEL |   with name ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-*
+   4.4 TEL |   with labels {'app': 'ks-controller-manager', 'telepresence': '65921e7ff08e447c99370466c5d0ca7b', 'tier': 'backend', 'version': 'v3.0.0'}
+   4.4 TEL | [14] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod -o json --selector=telepresence=65921e7ff08e447c99370466c5d0ca7b
+   4.6 TEL | [14] captured in 0.18 secs.
+   4.6 TEL | Checking ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh
+   4.6 TEL | Looks like we've found our pod!
+   4.6 TEL | BEGIN SPAN remote.py:104(wait_for_pod)
+   4.6 TEL | [15] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   4.7 TEL | [15] captured in 0.17 secs.
+   5.0 TEL | [16] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   5.2 TEL | [16] captured in 0.20 secs.
+   5.5 TEL | [17] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   5.7 TEL | [17] captured in 0.24 secs.
+   5.9 TEL | [18] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   6.1 TEL | [18] captured in 0.19 secs.
+   6.4 TEL | [19] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   6.6 TEL | [19] captured in 0.19 secs.
+   6.8 TEL | [20] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   7.1 TEL | [20] captured in 0.25 secs.
+   7.3 TEL | [21] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   7.5 TEL | [21] captured in 0.19 secs.
+   7.8 TEL | [22] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   8.0 TEL | [22] captured in 0.20 secs.
+   8.2 TEL | [23] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   8.5 TEL | [23] captured in 0.24 secs.
+   8.7 TEL | [24] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system get pod ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh -o json
+   8.9 TEL | [24] captured in 0.19 secs.
+   8.9 TEL | END SPAN remote.py:104(wait_for_pod)    4.3s
+   8.9 TEL | END SPAN remote.py:142(get_remote_info)    4.7s
+   8.9 TEL | BEGIN SPAN connect.py:37(connect)
+   8.9 TEL | [25] Launching kubectl logs: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system logs -f ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh --container ks-controller-manager --tail=10
+   8.9 TEL | [26] Launching kubectl port-forward: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system port-forward ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh 65440:8022
+   8.9 TEL | [27] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 65440 telepresence@127.0.0.1 /bin/true
+   8.9 TEL | [27] exit 255 in 0.01 secs.
+   9.2 TEL | [28] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 65440 telepresence@127.0.0.1 /bin/true
+   9.2  25 | 2021-01-17T08:42:11+0800 [-] Loading ./forwarder.py...
+   9.2  25 | 2021-01-17T08:42:11+0800 [-] /etc/resolv.conf changed, reparsing
+   9.2  25 | 2021-01-17T08:42:11+0800 [-] Resolver added ('169.254.25.10', 53) to server list
+   9.2  25 | 2021-01-17T08:42:11+0800 [-] SOCKSv5Factory starting on 9050
+   9.2  25 | 2021-01-17T08:42:11+0800 [socks.SOCKSv5Factory#info] Starting factory <socks.SOCKSv5Factory object at 0x7f72f2e64eb8>
+   9.2  25 | 2021-01-17T08:42:11+0800 [-] DNSDatagramProtocol starting on 9053
+   9.2  25 | 2021-01-17T08:42:11+0800 [-] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e6b198>
+   9.2  25 | 2021-01-17T08:42:11+0800 [-] Loaded.
+   9.2  25 | 2021-01-17T08:42:11+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] twistd 20.3.0 (/usr/bin/python3.6 3.6.8) starting up.
+   9.2  25 | 2021-01-17T08:42:11+0800 [twisted.scripts._twistd_unix.UnixAppLogger#info] reactor class: twisted.internet.epollreactor.EPollReactor.
+   9.2 TEL | [28] exit 255 in 0.02 secs.
+   9.3  26 | Forwarding from 127.0.0.1:65440 -> 8022
+   9.3  26 | Forwarding from [::1]:65440 -> 8022
+   9.4 TEL | [29] Running: ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 65440 telepresence@127.0.0.1 /bin/true
+   9.5  26 | Handling connection for 65440
+   9.9 TEL | [29] ran in 0.43 secs.
+   9.9 >>> | Forwarding remote port 8080 to local port 8080.
+   9.9 >>> | Forwarding remote port 8443 to local port 8443.
+   9.9 TEL | [30] Launching SSH port forward (exposed ports): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 65440 telepresence@127.0.0.1 -R '*:8080:127.0.0.1:8080' -R '*:8443:127.0.0.1:8443'
+   9.9 >>> | 
+   9.9 TEL | Launching Web server for proxy poll
+   9.9 TEL | [31] Launching SSH port forward (socks and proxy poll): ssh -N -oServerAliveInterval=1 -oServerAliveCountMax=10 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q -p 65440 telepresence@127.0.0.1 -L127.0.0.1:65451:127.0.0.1:9050 -R9055:127.0.0.1:65452
+   9.9  26 | Handling connection for 65440
+   9.9 TEL | END SPAN connect.py:37(connect)    1.0s
+   9.9 TEL | BEGIN SPAN remote_env.py:29(get_remote_env)
+   9.9 TEL | [32] Capturing: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system exec ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh --container ks-controller-manager -- python3 podinfo.py
+   9.9  26 | Handling connection for 65440
+  10.6 TEL | [32] captured in 0.67 secs.
+  10.6 TEL | END SPAN remote_env.py:29(get_remote_env)    0.7s
+  10.6 TEL | BEGIN SPAN mount.py:30(mount_remote_volumes)
+  10.6 TEL | [33] Running: sshfs -p 65440 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null telepresence@127.0.0.1:/ /tmp/tel-xt0e3jz6/fs
+  10.7  26 | Handling connection for 65440
+  11.1 TEL | [33] ran in 0.51 secs.
+  11.1 TEL | END SPAN mount.py:30(mount_remote_volumes)    0.5s
+  11.1 TEL | BEGIN SPAN vpn.py:280(connect_sshuttle)
+  11.1 TEL | BEGIN SPAN vpn.py:77(get_proxy_cidrs)
+  11.1 TEL | END SPAN vpn.py:77(get_proxy_cidrs)    0.0s
+  11.1 TEL | [34] Launching sshuttle: sshuttle-telepresence -v --dns --method auto -e 'ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' -r telepresence@127.0.0.1:65440 --to-ns 127.0.0.1:9053 10.233.0.0/18 10.233.64.0/24
+  11.1 TEL | BEGIN SPAN vpn.py:303(connect_sshuttle,sshuttle-wait)
+  11.1 TEL | Wait for vpn-tcp connection: hellotelepresence-0
+  11.1 TEL | [35] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0")'
+  11.2 TEL | [35] exit 1 in 0.13 secs.
+  11.2 TEL | [36] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0.a.sanity.check.telepresence.io")'
+  11.4 TEL | [36] exit 1 in 0.17 secs.
+  11.5 TEL | Wait for vpn-tcp connection: hellotelepresence-1
+  11.5 TEL | [37] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1")'
+  11.6 TEL | [37] exit 1 in 0.12 secs.
+  11.6 TEL | [38] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1.a.sanity.check.telepresence.io")'
+  11.9  34 | Starting sshuttle proxy.
+  12.6 TEL | [38] timed out after 1.01 secs.
+  12.7 TEL | Wait for vpn-tcp connection: hellotelepresence-2
+  12.7 TEL | [39] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2")'
+  12.9 TEL | [39] exit 1 in 0.17 secs.
+  12.9 TEL | [40] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2.a.sanity.check.telepresence.io")'
+  13.2 TEL | [40] exit 1 in 0.33 secs.
+  13.3 TEL | Wait for vpn-tcp connection: hellotelepresence-3
+  13.3 TEL | [41] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3")'
+  13.4 TEL | [41] exit 1 in 0.12 secs.
+  13.4 TEL | [42] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3.a.sanity.check.telepresence.io")'
+  13.5  34 | firewall manager: Starting firewall with Python version 3.9.0
+  13.5  34 | firewall manager: ready method name pf.
+  13.5  34 | IPv6 enabled: True
+  13.5  34 | UDP enabled: False
+  13.5  34 | DNS enabled: True
+  13.5  34 | TCP redirector listening on ('::1', 12300, 0, 0).
+  13.5  34 | TCP redirector listening on ('127.0.0.1', 12300).
+  13.5  34 | DNS listening on ('::1', 12300, 0, 0).
+  13.5  34 | DNS listening on ('127.0.0.1', 12300).
+  13.5  34 | Starting client with Python version 3.9.0
+  13.5  34 | c : connecting to server...
+  13.5 TEL | [42] exit 1 in 0.07 secs.
+  13.5  26 | Handling connection for 65440
+  13.6 TEL | Wait for vpn-tcp connection: hellotelepresence-4
+  13.6 TEL | [43] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4")'
+  13.7  34 | Warning: Permanently added '[127.0.0.1]:65440' (ECDSA) to the list of known hosts.
+  13.7 TEL | [43] exit 1 in 0.12 secs.
+  13.7 TEL | [44] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4.a.sanity.check.telepresence.io")'
+  14.0  34 | Starting server with Python version 3.6.8
+  14.0  34 |  s: latency control setting = True
+  14.0  34 |  s: available routes:
+  14.0  34 |  s:   2/10.233.64.0/24
+  14.0  34 |  s:   2/10.233.64.0/18
+  14.0  34 | c : Connected.
+  14.0  34 | firewall manager: setting up.
+  14.0  34 | >> pfctl -s Interfaces -i lo -v
+  14.0  34 | >> pfctl -s all
+  14.0  34 | >> pfctl -a sshuttle6-12300 -f /dev/stdin
+  14.1  34 | >> pfctl -E
+  14.1  34 | >> pfctl -s Interfaces -i lo -v
+  14.1  34 | >> pfctl -s all
+  14.1  34 | >> pfctl -a sshuttle-12300 -f /dev/stdin
+  14.1  34 | >> pfctl -E
+  14.7 TEL | [44] timed out after 1.01 secs.
+  14.8 TEL | Wait for vpn-tcp connection: hellotelepresence-5
+  14.8 TEL | [45] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5")'
+  14.9  34 | c : DNS request from ('192.168.3.3', 53386) to None: 45 bytes
+  14.9  25 | 2021-01-17T08:42:17+0800 [stdout#info] Set DNS suffix we filter out to: [(b'openvpn',)]
+  14.9  25 | 2021-01-17T08:42:17+0800 [stdout#info] Result for b'hellotelepresence-5.openvpn' is ['127.0.0.1']
+  15.0 TEL | [45] captured in 0.12 secs.
+  15.0 TEL | Resolved hellotelepresence-5. 2 more...
+  15.0 TEL | [46] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5.a.sanity.check.telepresence.io")'
+  15.0  34 | c : DNS request from ('192.168.3.3', 51395) to None: 68 bytes
+  15.0  25 | 2021-01-17T08:42:17+0800 [stdout#info] Sanity check: b'hellotelepresence-5.a.sanity.check.telepresence.io'
+  15.1 TEL | [46] exit 1 in 0.13 secs.
+  15.2 TEL | Wait for vpn-tcp connection: hellotelepresence-6
+  15.2 TEL | [47] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6")'
+  15.2  34 | c : DNS request from ('192.168.3.3', 50605) to None: 45 bytes
+  15.3  25 | 2021-01-17T08:42:18+0800 [stdout#info] Result for b'hellotelepresence-6.openvpn' is ['127.0.0.1']
+  15.3 TEL | [47] captured in 0.12 secs.
+  15.3 TEL | Resolved hellotelepresence-6. 1 more...
+  15.3 TEL | [48] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6.a.sanity.check.telepresence.io")'
+  15.4  34 | c : DNS request from ('192.168.3.3', 63866) to None: 68 bytes
+  15.4  25 | 2021-01-17T08:42:18+0800 [stdout#info] Sanity check: b'hellotelepresence-6.a.sanity.check.telepresence.io'
+  15.4 TEL | [48] exit 1 in 0.12 secs.
+  15.5 TEL | Wait for vpn-tcp connection: hellotelepresence-7
+  15.5 TEL | [49] Capturing: python3 -c 'import socket; socket.gethostbyname("hellotelepresence-7")'
+  15.6  34 | c : DNS request from ('192.168.3.3', 52636) to None: 45 bytes
+  15.6  25 | 2021-01-17T08:42:18+0800 [stdout#info] Result for b'hellotelepresence-7.openvpn' is ['127.0.0.1']
+  15.7 TEL | [49] captured in 0.13 secs.
+  15.7 TEL | Resolved hellotelepresence-7. 0 more...
+  15.7 TEL | END SPAN vpn.py:303(connect_sshuttle,sshuttle-wait)    4.6s
+  15.7 TEL | END SPAN vpn.py:280(connect_sshuttle)    4.6s
+  15.7 >>> | Connected. Flushing DNS cache.
+  15.7 TEL | [50] Running: sudo -n /usr/bin/pkill -HUP mDNSResponder
+  15.7  34 | c : DNS request from ('192.168.3.3', 63126) to None: 58 bytes
+  15.7  34 | c : DNS request from ('192.168.3.3', 57164) to None: 57 bytes
+  15.7  34 | c : DNS request from ('192.168.3.3', 52448) to None: 61 bytes
+  15.7  34 | c : DNS request from ('192.168.3.3', 65500) to None: 41 bytes
+  15.7 TEL | [50] ran in 0.06 secs.
+  15.8  25 | 2021-01-17T08:42:18+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.0.3.168.192.in-addr.arpa'
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 42769
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e6b908>
+  15.8  25 | 2021-01-17T08:42:18+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.6.1.255.10.in-addr.arpa'
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 20370
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e6bc88>
+  15.8  25 | 2021-01-17T08:42:18+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.86.196.168.192.in-addr.arpa'
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 21799
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e6be80>
+  15.8  25 | 2021-01-17T08:42:18+0800 [stdout#info] Updated query of type 12 from b'lb._dns-sd._udp.openvpn' to b'lb._dns-sd._udp'
+  15.8  25 | 2021-01-17T08:42:18+0800 [stdout#info] 12 query: b'lb._dns-sd._udp'
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 54786
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e8a208>
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] (UDP Port 42769 Closed)
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e6b908>
+  15.8  25 | 2021-01-17T08:42:18+0800 [stdout#info] Failed to lookup b'lb._dns-sd._udp' due to [Failure instance: Traceback (failure with no frames): <class 'twisted.names.error.DNSNameError'>: <Message id=20789 rCode=3 maxSize=0 flags=answer,recDes,recAv queries=[Query(b'lb._dns-sd._udp', 12, 1)] authority=[<RR name= type=SOA class=IN ttl=30s auth=False>]>
+  15.8  25 | 2021-01-17T08:42:18+0800 [stdout#info] ], falling back to b'lb._dns-sd._udp.openvpn'
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 56666
+  15.8  25 | 2021-01-17T08:42:18+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e8a1d0>
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] (UDP Port 20370 Closed)
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e6bc88>
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] (UDP Port 54786 Closed)
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e8a208>
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] (UDP Port 21799 Closed)
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e6be80>
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] (UDP Port 56666 Closed)
+  15.8  25 | 2021-01-17T08:42:18+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e8a1d0>
+  17.7 >>> | Setup complete. Launching your command.
+  17.7 TEL | Everything launched. Waiting to exit...
+  17.7 TEL | BEGIN SPAN runner.py:726(wait_for_exit)
+  18.1  34 | c : DNS request from ('192.168.3.3', 50967) to None: 29 bytes
+  18.2  25 | 2021-01-17T08:42:20+0800 [stdout#info] A query: b'pcfg.wps.cn'
+  18.2  25 | 2021-01-17T08:42:20+0800 [stdout#info] Result for b'pcfg.wps.cn' is ['120.92.84.16', '120.92.84.225']
+  31.4 TEL | [51] Running: sudo -n echo -n
+  31.5 TEL | [51] ran in 0.11 secs.
+  32.9  34 | c : DNS request from ('192.168.3.3', 57650) to None: 47 bytes
+  32.9  25 | 2021-01-17T08:42:35+0800 [stdout#info] A query: b'apidata.googleusercontent.com'
+  32.9  25 | 2021-01-17T08:42:35+0800 [stdout#info] Result for b'apidata.googleusercontent.com' is ['172.217.27.129']
+  39.0 TEL | (proxy checking local liveness)
+  39.1  25 | 2021-01-17T08:42:41+0800 [Poll#info] Checkpoint
+  61.6 TEL | [52] Running: sudo -n echo -n
+  61.6 TEL | [52] ran in 0.05 secs.
+  69.0 TEL | (proxy checking local liveness)
+  69.1  25 | 2021-01-17T08:43:11+0800 [Poll#info] Checkpoint
+  79.4  34 | c : DNS request from ('192.168.3.3', 63126) to None: 58 bytes
+  79.4  34 | c : DNS request from ('192.168.3.3', 57164) to None: 57 bytes
+  79.4  34 | c : DNS request from ('192.168.3.3', 52448) to None: 61 bytes
+  79.4  34 | c : DNS request from ('192.168.3.3', 65500) to None: 41 bytes
+  79.5  25 | 2021-01-17T08:43:22+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.0.3.168.192.in-addr.arpa'
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 12313
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed49b0>
+  79.5  25 | 2021-01-17T08:43:22+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.6.1.255.10.in-addr.arpa'
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 1298
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4a20>
+  79.5  25 | 2021-01-17T08:43:22+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.86.196.168.192.in-addr.arpa'
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 12596
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4c18>
+  79.5  25 | 2021-01-17T08:43:22+0800 [stdout#info] Updated query of type 12 from b'lb._dns-sd._udp.openvpn' to b'lb._dns-sd._udp'
+  79.5  25 | 2021-01-17T08:43:22+0800 [stdout#info] 12 query: b'lb._dns-sd._udp'
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 59725
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4f28>
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] (UDP Port 12313 Closed)
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed49b0>
+  79.5  25 | 2021-01-17T08:43:22+0800 [stdout#info] Failed to lookup b'lb._dns-sd._udp' due to [Failure instance: Traceback (failure with no frames): <class 'twisted.names.error.DNSNameError'>: <Message id=40281 rCode=3 maxSize=0 flags=answer,recDes,recAv queries=[Query(b'lb._dns-sd._udp', 12, 1)] authority=[<RR name= type=SOA class=IN ttl=30s auth=False>]>
+  79.5  25 | 2021-01-17T08:43:22+0800 [stdout#info] ], falling back to b'lb._dns-sd._udp.openvpn'
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 65442
+  79.5  25 | 2021-01-17T08:43:22+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4550>
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] (UDP Port 1298 Closed)
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4a20>
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] (UDP Port 12596 Closed)
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4c18>
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] (UDP Port 59725 Closed)
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4f28>
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] (UDP Port 65442 Closed)
+  79.5  25 | 2021-01-17T08:43:22+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4550>
+  91.7 TEL | [53] Running: sudo -n echo -n
+  91.7 TEL | [53] ran in 0.03 secs.
+  99.0 TEL | (proxy checking local liveness)
+  99.1  25 | 2021-01-17T08:43:41+0800 [Poll#info] Checkpoint
+ 109.4  34 | c : DNS request from ('192.168.3.3', 51717) to None: 47 bytes
+ 109.4  25 | 2021-01-17T08:43:52+0800 [stdout#info] A query: b'apidata.googleusercontent.com'
+ 109.4  25 | 2021-01-17T08:43:52+0800 [stdout#info] Result for b'apidata.googleusercontent.com' is ['172.217.27.129']
+ 121.8 TEL | [54] Running: sudo -n echo -n
+ 121.8 TEL | [54] ran in 0.03 secs.
+ 129.0 TEL | (proxy checking local liveness)
+ 129.1  25 | 2021-01-17T08:44:11+0800 [Poll#info] Checkpoint
+ 142.1  34 | c : DNS request from ('192.168.3.3', 58720) to None: 35 bytes
+ 142.2  25 | 2021-01-17T08:44:24+0800 [stdout#info] A query: b'qingcenter.wps.cn'
+ 142.2  25 | 2021-01-17T08:44:24+0800 [stdout#info] Result for b'qingcenter.wps.cn' is ['239.11.20.1']
+ 147.1  34 | c : DNS request from ('192.168.3.3', 50724) to None: 43 bytes
+ 147.1  25 | 2021-01-17T08:44:29+0800 [stdout#info] A query: b'11-courier.push.apple.com'
+ 147.2  25 | 2021-01-17T08:44:29+0800 [stdout#info] Result for b'11-courier.push.apple.com' is ['17.57.145.7', '17.57.145.9', '17.57.145.4', '17.57.145.6', '17.57.145.5', '17.57.145.8']
+ 151.2  34 | c : DNS request from ('192.168.3.3', 64547) to None: 28 bytes
+ 151.3  25 | 2021-01-17T08:44:34+0800 [stdout#info] A query: b'github.com'
+ 151.3  25 | 2021-01-17T08:44:34+0800 [stdout#info] Result for b'github.com' is ['52.74.223.119']
+ 151.9 TEL | [55] Running: sudo -n echo -n
+ 151.9 TEL | [55] ran in 0.03 secs.
+ 159.0 TEL | (proxy checking local liveness)
+ 159.1  25 | 2021-01-17T08:44:41+0800 [Poll#info] Checkpoint
+ 174.0  34 | c : DNS request from ('192.168.3.3', 54091) to None: 45 bytes
+ 174.0  25 | 2021-01-17T08:44:56+0800 [stdout#info] A query: b'safebrowsing.googleapis.com'
+ 174.1  25 | 2021-01-17T08:44:56+0800 [stdout#info] Result for b'safebrowsing.googleapis.com' is ['203.208.41.33']
+ 178.4  34 | c : DNS request from ('192.168.3.3', 51659) to None: 41 bytes
+ 178.4  25 | 2021-01-17T08:45:01+0800 [stdout#info] A query: b'config.pinyin.sogou.com'
+ 178.5  25 | 2021-01-17T08:45:01+0800 [stdout#info] Result for b'config.pinyin.sogou.com' is ['118.191.216.42', '118.191.216.57', '119.28.109.132']
+ 182.0 TEL | [56] Running: sudo -n echo -n
+ 182.0 TEL | [56] ran in 0.03 secs.
+ 188.1  34 | c : DNS request from ('192.168.3.3', 53665) to None: 29 bytes
+ 188.2  25 | 2021-01-17T08:45:10+0800 [stdout#info] A query: b'pcfg.wps.cn'
+ 188.3  25 | 2021-01-17T08:45:11+0800 [stdout#info] Result for b'pcfg.wps.cn' is ['120.92.84.225', '120.92.84.16']
+ 189.0 TEL | (proxy checking local liveness)
+ 189.1  25 | 2021-01-17T08:45:11+0800 [Poll#info] Checkpoint
+ 194.7  34 | c : DNS request from ('192.168.3.3', 49250) to None: 38 bytes
+ 194.8  25 | 2021-01-17T08:45:17+0800 [stdout#info] A query: b'time-macos.apple.com'
+ 194.8  25 | 2021-01-17T08:45:17+0800 [stdout#info] Result for b'time-macos.apple.com' is ['17.253.68.125', '17.253.68.253', '17.253.68.123', '17.253.84.251', '17.253.84.253']
+ 202.5  34 | c : DNS request from ('192.168.3.3', 37897) to None: 47 bytes
+ 202.5  25 | 2021-01-17T08:45:25+0800 [stdout#info] A query: b'clientservices.googleapis.com'
+ 202.7  25 | 2021-01-17T08:45:25+0800 [stdout#info] Result for b'clientservices.googleapis.com' is ['203.208.40.98']
+ 212.0 TEL | [57] Running: sudo -n echo -n
+ 212.1 TEL | [57] ran in 0.03 secs.
+ 219.1 TEL | (proxy checking local liveness)
+ 219.2  25 | 2021-01-17T08:45:41+0800 [Poll#info] Checkpoint
+ 239.1  34 | c : DNS request from ('192.168.3.3', 63126) to None: 58 bytes
+ 239.1  34 | c : DNS request from ('192.168.3.3', 57164) to None: 57 bytes
+ 239.1  34 | c : DNS request from ('192.168.3.3', 52448) to None: 61 bytes
+ 239.1  34 | c : DNS request from ('192.168.3.3', 65500) to None: 41 bytes
+ 239.1  25 | 2021-01-17T08:46:01+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.0.3.168.192.in-addr.arpa'
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 40338
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b390>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.6.1.255.10.in-addr.arpa'
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 41440
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b710>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.86.196.168.192.in-addr.arpa'
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 60587
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b908>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [stdout#info] Updated query of type 12 from b'lb._dns-sd._udp.openvpn' to b'lb._dns-sd._udp'
+ 239.1  25 | 2021-01-17T08:46:01+0800 [stdout#info] 12 query: b'lb._dns-sd._udp'
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 54743
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1bc18>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] (UDP Port 40338 Closed)
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b390>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [stdout#info] Failed to lookup b'lb._dns-sd._udp' due to [Failure instance: Traceback (failure with no frames): <class 'twisted.names.error.DNSNameError'>: <Message id=10974 rCode=3 maxSize=0 flags=answer,recDes,recAv queries=[Query(b'lb._dns-sd._udp', 12, 1)] authority=[<RR name= type=SOA class=IN ttl=30s auth=False>]>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [stdout#info] ], falling back to b'lb._dns-sd._udp.openvpn'
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 34035
+ 239.1  25 | 2021-01-17T08:46:01+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1bf60>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] (UDP Port 54743 Closed)
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1bc18>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] (UDP Port 41440 Closed)
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b710>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] (UDP Port 60587 Closed)
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b908>
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] (UDP Port 34035 Closed)
+ 239.1  25 | 2021-01-17T08:46:01+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1bf60>
+ 242.1 TEL | [58] Running: sudo -n echo -n
+ 242.2 TEL | [58] ran in 0.03 secs.
+ 249.0 TEL | (proxy checking local liveness)
+ 249.1  25 | 2021-01-17T08:46:11+0800 [Poll#info] Checkpoint
+ 268.1  34 | c : DNS request from ('192.168.3.3', 59858) to None: 48 bytes
+ 268.1  25 | 2021-01-17T08:46:30+0800 [stdout#info] A query: b'vscode-sync.trafficmanager.net'
+ 268.2  25 | 2021-01-17T08:46:30+0800 [stdout#info] Result for b'vscode-sync.trafficmanager.net' is ['13.67.9.5']
+ 272.2 TEL | [59] Running: sudo -n echo -n
+ 272.3 TEL | [59] ran in 0.04 secs.
+ 279.0 TEL | (proxy checking local liveness)
+ 279.1  25 | 2021-01-17T08:46:41+0800 [Poll#info] Checkpoint
+ 302.3 TEL | [60] Running: sudo -n echo -n
+ 302.4 TEL | [60] ran in 0.03 secs.
+ 309.0 TEL | (proxy checking local liveness)
+ 309.1  25 | 2021-01-17T08:47:11+0800 [Poll#info] Checkpoint
+ 332.4 TEL | [61] Running: sudo -n echo -n
+ 332.5 TEL | [61] ran in 0.03 secs.
+ 339.0 TEL | (proxy checking local liveness)
+ 339.1  25 | 2021-01-17T08:47:41+0800 [Poll#info] Checkpoint
+ 362.5 TEL | [62] Running: sudo -n echo -n
+ 362.5 TEL | [62] ran in 0.04 secs.
+ 369.1 TEL | (proxy checking local liveness)
+ 369.1  25 | 2021-01-17T08:48:11+0800 [Poll#info] Checkpoint
+ 369.8  34 | c : DNS request from ('192.168.3.3', 49271) to None: 43 bytes
+ 369.8  25 | 2021-01-17T08:48:12+0800 [stdout#info] A query: b'vortex.data.microsoft.com'
+ 369.9  25 | 2021-01-17T08:48:12+0800 [stdout#info] Result for b'vortex.data.microsoft.com' is ['111.221.29.254']
+ 392.6 TEL | [63] Running: sudo -n echo -n
+ 392.7 TEL | [63] ran in 0.03 secs.
+ 399.1 TEL | (proxy checking local liveness)
+ 399.1  25 | 2021-01-17T08:48:41+0800 [Poll#info] Checkpoint
+ 405.7  34 | c : DNS request from ('192.168.3.3', 57902) to None: 35 bytes
+ 405.7  25 | 2021-01-17T08:48:48+0800 [stdout#info] Updated query of type 28 from b'localhost.openvpn' to b'localhost'
+ 405.7  25 | 2021-01-17T08:48:48+0800 [stdout#info] AAAA query, sending back A instead: b'localhost'
+ 405.7  25 | 2021-01-17T08:48:48+0800 [stdout#info] A query: b'localhost'
+ 405.7  34 | c : DNS request from ('192.168.3.3', 60325) to None: 27 bytes
+ 405.7  25 | 2021-01-17T08:48:48+0800 [stdout#info] Result for b'localhost.openvpn' is ['127.0.0.1']
+ 405.8  25 | 2021-01-17T08:48:48+0800 [stdout#info] AAAA query, sending back A instead: b'localhost'
+ 405.8  25 | 2021-01-17T08:48:48+0800 [stdout#info] A query: b'localhost'
+ 405.8  25 | 2021-01-17T08:48:48+0800 [stdout#info] Result for b'localhost' is ['127.0.0.1']
+ 406.3  34 | c : DNS request from ('192.168.3.3', 54473) to None: 40 bytes
+ 406.3  25 | 2021-01-17T08:48:49+0800 [stdout#info] A query: b'api.apple-cloudkit.com'
+ 406.3  25 | 2021-01-17T08:48:49+0800 [stdout#info] Result for b'api.apple-cloudkit.com' is ['17.248.165.82', '17.248.165.14', '17.248.165.40', '17.248.165.77', '17.248.165.106', '17.248.165.75', '17.248.165.72', '17.248.165.39']
+ 422.7 TEL | [64] Running: sudo -n echo -n
+ 422.8 TEL | [64] ran in 0.04 secs.
+ 429.1 TEL | (proxy checking local liveness)
+ 429.1  25 | 2021-01-17T08:49:11+0800 [Poll#info] Checkpoint
+ 429.2  34 | c : DNS request from ('192.168.3.3', 52746) to None: 43 bytes
+ 429.2  25 | 2021-01-17T08:49:12+0800 [stdout#info] A query: b'13-courier.push.apple.com'
+ 429.3  25 | 2021-01-17T08:49:12+0800 [stdout#info] Result for b'13-courier.push.apple.com' is ['17.57.145.6', '17.57.145.8', '17.57.145.7', '17.57.145.4', '17.57.145.5', '17.57.145.9']
+ 452.8 TEL | [65] Running: sudo -n echo -n
+ 452.8 TEL | [65] ran in 0.03 secs.
+ 459.0 TEL | (proxy checking local liveness)
+ 459.1  25 | 2021-01-17T08:49:41+0800 [Poll#info] Checkpoint
+ 476.1  34 | c : DNS request from ('192.168.3.3', 61468) to None: 28 bytes
+ 476.1  25 | 2021-01-17T08:49:58+0800 [stdout#info] A query: b'github.com'
+ 476.1  25 | 2021-01-17T08:49:58+0800 [stdout#info] Result for b'github.com' is ['13.250.177.223']
+ 478.4  34 | c : DNS request from ('192.168.3.3', 50091) to None: 41 bytes
+ 478.4  25 | 2021-01-17T08:50:01+0800 [stdout#info] A query: b'config.pinyin.sogou.com'
+ 478.4  25 | 2021-01-17T08:50:01+0800 [stdout#info] Result for b'config.pinyin.sogou.com' is ['119.28.109.132', '118.191.216.42', '118.191.216.57']
+ 482.9 TEL | [66] Running: sudo -n echo -n
+ 482.9 TEL | [66] ran in 0.03 secs.
+ 489.2 TEL | (proxy checking local liveness)
+ 489.2  25 | 2021-01-17T08:50:11+0800 [Poll#info] Checkpoint
+ 513.0 TEL | [67] Running: sudo -n echo -n
+ 513.0 TEL | [67] ran in 0.02 secs.
+ 519.1 TEL | (proxy checking local liveness)
+ 519.1  25 | 2021-01-17T08:50:41+0800 [Poll#info] Checkpoint
+ 523.3  34 | c : DNS request from ('192.168.3.3', 51725) to None: 28 bytes
+ 523.3  25 | 2021-01-17T08:50:46+0800 [stdout#info] A query: b'github.com'
+ 523.4  25 | 2021-01-17T08:50:46+0800 [stdout#info] Result for b'github.com' is ['13.229.188.59']
+ 543.1 TEL | [68] Running: sudo -n echo -n
+ 543.1 TEL | [68] ran in 0.03 secs.
+ 549.0 TEL | (proxy checking local liveness)
+ 549.1  25 | 2021-01-17T08:51:11+0800 [Poll#info] Checkpoint
+ 568.7  34 | c : DNS request from ('192.168.3.3', 53552) to None: 48 bytes
+ 568.8  25 | 2021-01-17T08:51:31+0800 [stdout#info] A query: b'vscode-sync.trafficmanager.net'
+ 569.5  25 | 2021-01-17T08:51:32+0800 [stdout#info] Result for b'vscode-sync.trafficmanager.net' is ['13.67.9.5']
+ 573.2 TEL | [69] Running: sudo -n echo -n
+ 573.2 TEL | [69] ran in 0.03 secs.
+ 579.1 TEL | (proxy checking local liveness)
+ 579.1  25 | 2021-01-17T08:51:41+0800 [Poll#info] Checkpoint
+ 586.6  34 | c : DNS request from ('192.168.3.3', 53224) to None: 36 bytes
+ 586.6  25 | 2021-01-17T08:51:49+0800 [stdout#info] A query: b'flux.hcdn.qiyi.com'
+ 586.6  25 | 2021-01-17T08:51:49+0800 [stdout#info] Result for b'flux.hcdn.qiyi.com' is ['124.64.199.237', '58.49.213.21']
+ 586.6  34 | c : DNS request from ('192.168.3.3', 56390) to None: 40 bytes
+ 586.7  25 | 2021-01-17T08:51:49+0800 [stdout#info] A query: b'flux.hcdn.ppstream.com'
+ 586.7  25 | 2021-01-17T08:51:49+0800 [stdout#info] Result for b'flux.hcdn.ppstream.com' is ['124.64.199.237', '58.49.213.21']
+ 603.3 TEL | [70] Running: sudo -n echo -n
+ 603.3 TEL | [70] ran in 0.03 secs.
+ 609.1 TEL | (proxy checking local liveness)
+ 609.1  25 | 2021-01-17T08:52:11+0800 [Poll#info] Checkpoint
+ 633.4 TEL | [71] Running: sudo -n echo -n
+ 633.4 TEL | [71] ran in 0.02 secs.
+ 639.0  34 | c : DNS request from ('192.168.3.3', 63126) to None: 58 bytes
+ 639.0  34 | c : DNS request from ('192.168.3.3', 57164) to None: 57 bytes
+ 639.0  34 | c : DNS request from ('192.168.3.3', 52448) to None: 61 bytes
+ 639.0  34 | c : DNS request from ('192.168.3.3', 65500) to None: 41 bytes
+ 639.0  25 | 2021-01-17T08:52:41+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.0.3.168.192.in-addr.arpa'
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 50251
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed47f0>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.6.1.255.10.in-addr.arpa'
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 51110
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4cf8>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [stdout#info] 12 query: b'lb._dns-sd._udp.86.196.168.192.in-addr.arpa'
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 38313
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e2c898>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [stdout#info] Updated query of type 12 from b'lb._dns-sd._udp.openvpn' to b'lb._dns-sd._udp'
+ 639.0  25 | 2021-01-17T08:52:41+0800 [stdout#info] 12 query: b'lb._dns-sd._udp'
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 52860
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e2cc88>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] (UDP Port 51110 Closed)
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed4cf8>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [stdout#info] Failed to lookup b'lb._dns-sd._udp' due to [Failure instance: Traceback (failure with no frames): <class 'twisted.names.error.DNSNameError'>: <Message id=23496 rCode=3 maxSize=0 flags=answer,recDes,recAv queries=[Query(b'lb._dns-sd._udp', 12, 1)] authority=[<RR name= type=SOA class=IN ttl=30s auth=False>]>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [stdout#info] ], falling back to b'lb._dns-sd._udp.openvpn'
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] DNSDatagramProtocol starting on 9844
+ 639.0  25 | 2021-01-17T08:52:41+0800 [DNSDatagramProtocol (UDP)] Starting protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b9b0>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] (UDP Port 50251 Closed)
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2ed47f0>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] (UDP Port 38313 Closed)
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e2c898>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] (UDP Port 52860 Closed)
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e2cc88>
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] (UDP Port 9844 Closed)
+ 639.0  25 | 2021-01-17T08:52:41+0800 [-] Stopping protocol <twisted.names.dns.DNSDatagramProtocol object at 0x7f72f2e1b9b0>
+ 639.0 TEL | (proxy checking local liveness)
+ 639.1  25 | 2021-01-17T08:52:41+0800 [Poll#info] Checkpoint
+ 663.5 TEL | [72] Running: sudo -n echo -n
+ 663.5 TEL | [72] ran in 0.03 secs.
+ 669.1 TEL | (proxy checking local liveness)
+ 669.1  25 | 2021-01-17T08:53:11+0800 [Poll#info] Checkpoint
+ 693.6 TEL | [73] Running: sudo -n echo -n
+ 693.6 TEL | [73] ran in 0.03 secs.
+ 699.1 TEL | (proxy checking local liveness)
+ 699.1  25 | 2021-01-17T08:53:41+0800 [Poll#info] Checkpoint
+ 711.3  34 | c : DNS request from ('192.168.3.3', 56824) to None: 43 bytes
+ 711.3  25 | 2021-01-17T08:53:54+0800 [stdout#info] A query: b'48-courier.push.apple.com'
+ 711.3  25 | 2021-01-17T08:53:54+0800 [stdout#info] Result for b'48-courier.push.apple.com' is ['17.57.145.100', '17.57.145.102', '17.57.145.101', '17.57.145.85']
+ 712.3  34 | c : DNS request from ('192.168.3.3', 62742) to None: 45 bytes
+ 712.3  25 | 2021-01-17T08:53:55+0800 [stdout#info] A query: b'settings.data.microsoft.com'
+ 712.6  25 | 2021-01-17T08:53:55+0800 [stdout#info] Result for b'settings.data.microsoft.com' is ['40.119.249.228']
+ 723.7 TEL | [74] Running: sudo -n echo -n
+ 723.7 TEL | [74] ran in 0.03 secs.
+ 729.0 TEL | (proxy checking local liveness)
+ 729.1  25 | 2021-01-17T08:54:11+0800 [Poll#info] Checkpoint
+ 753.8 TEL | [75] Running: sudo -n echo -n
+ 753.8 TEL | [75] ran in 0.03 secs.
+ 759.1 TEL | (proxy checking local liveness)
+ 759.1  25 | 2021-01-17T08:54:41+0800 [Poll#info] Checkpoint
+ 778.4  34 | c : DNS request from ('192.168.3.3', 50248) to None: 41 bytes
+ 778.4  25 | 2021-01-17T08:55:01+0800 [stdout#info] A query: b'config.pinyin.sogou.com'
+ 778.5  25 | 2021-01-17T08:55:01+0800 [stdout#info] Result for b'config.pinyin.sogou.com' is ['118.191.216.57', '118.191.216.42', '119.28.109.132']
+ 783.9 TEL | [76] Running: sudo -n echo -n
+ 783.9 TEL | [76] ran in 0.03 secs.
+ 789.0 TEL | (proxy checking local liveness)
+ 789.1  25 | 2021-01-17T08:55:11+0800 [Poll#info] Checkpoint
+ 814.0 TEL | [77] Running: sudo -n echo -n
+ 814.0 TEL | [77] ran in 0.03 secs.
+ 819.0 TEL | (proxy checking local liveness)
+ 819.1  25 | 2021-01-17T08:55:41+0800 [Poll#info] Checkpoint
+ 844.1 TEL | [78] Running: sudo -n echo -n
+ 844.1 TEL | [78] ran in 0.04 secs.
+ 845.1 TEL | Main process (bash --norc)
+ 845.1 TEL |  exited with code 0.
+ 845.2 TEL | END SPAN runner.py:726(wait_for_exit)  827.5s
+ 845.2 >>> | Your process has exited.
+ 845.2 TEL | EXITING successful session.
+ 845.2 >>> | Exit cleanup in progress
+ 845.2 TEL | (Cleanup) Terminate local process
+ 845.2 TEL | Local process is already dead (ret=0)
+ 845.2 TEL | (Cleanup) Kill BG process [34] sshuttle
+ 845.2  34 | >> pfctl -a sshuttle6-12300 -F all
+ 845.2 TEL | (Cleanup) Unmount remote filesystem
+ 845.2 TEL | [79] Running: umount -f /tmp/tel-xt0e3jz6/fs
+ 845.2  34 | >> pfctl -X 2327399303025317165
+ 845.2  34 | >> pfctl -a sshuttle-12300 -F all
+ 845.2  34 | >> pfctl -X 2327399303025328653
+ 845.3 TEL | [79] ran in 0.05 secs.
+ 845.3 TEL | (Cleanup) Kill BG process [31] SSH port forward (socks and proxy poll)
+ 845.3 TEL | [31] SSH port forward (socks and proxy poll): exit 0
+ 845.3 TEL | (Cleanup) Kill Web server for proxy poll
+ 845.3 TEL | [34] sshuttle: exit -15
+ 845.7 TEL | (Cleanup) Kill BG process [30] SSH port forward (exposed ports)
+ 845.7 TEL | [30] SSH port forward (exposed ports): exit 0
+ 845.7 TEL | (Cleanup) Kill BG process [26] kubectl port-forward
+ 845.7 TEL | [26] kubectl port-forward: exit -15
+ 845.7 TEL | (Cleanup) Kill BG process [25] kubectl logs
+ 845.7 TEL | [25] kubectl logs: exit -15
+ 845.7 TEL | (Cleanup) Re-scale original deployment
+ 845.7 TEL | Background process (kubectl logs) exited with return code -15. Command was:
+ 845.7 TEL |   kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system logs -f ks-controller-man-65921e7ff08e447c99370466c5d0ca7b-6d46576h9hrh --container ks-controller-manager --tail=10
+ 845.7 TEL | 
+ 845.7 TEL | [80] Running: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system scale deployment ks-controller-manager --replicas=1
+ 845.7 TEL | Recent output was:
+ 845.7 TEL |   2021-01-17T08:53:54+0800 [stdout#info] A query: b'48-courier.push.apple.com'
+ 845.7 TEL |   2021-01-17T08:53:54+0800 [stdout#info] Result for b'48-courier.push.apple.com' is ['17.57.145.100', '17.57.145.102', '17.57.145.101', '17.57.145.85']
+ 845.7 TEL |   2021-01-17T08:53:55+0800 [stdout#info] A query: b'settings.data.microsoft.com'
+ 845.7 TEL |   2021-01-17T08:53:55+0800 [stdout#info] Result for b'settings.data.microsoft.com' is ['40.119.249.228']
+ 845.7 TEL |   2021-01-17T08:54:11+0800 [Poll#info] Checkpoint
+ 845.7 TEL |   2021-01-17T08:54:41+0800 [Poll#info] Checkpoint
+ 845.7 TEL |   2021-01-17T08:55:01+0800 [stdout#info] A query: b'config.pinyin.sogou.com'
+ 845.7 TEL |   2021-01-17T08:55:01+0800 [stdout#info] Result for b'config.pinyin.sogou.com' is ['118.191.216.57', '118.191.216.42', '119.28.109.132']
+ 845.7 TEL |   2021-01-17T08:55:11+0800 [Poll#info] Checkpoint
+ 845.7 TEL |   2021-01-17T08:55:41+0800 [Poll#info] Checkpoint
+ 845.9  80 | deployment.apps/ks-controller-manager scaled
+ 845.9 TEL | [80] ran in 0.24 secs.
+ 845.9 TEL | (Cleanup) Delete new deployment
+ 845.9 >>> | Swapping Deployment ks-controller-manager back to its original state
+ 845.9 TEL | [81] Running: kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system delete deployment ks-controller-man-65921e7ff08e447c99370466c5d0ca7b
+ 846.1  81 | deployment.apps "ks-controller-man-65921e7ff08e447c99370466c5d0ca7b" deleted
+ 846.1 TEL | [81] ran in 0.20 secs.
+ 846.1 TEL | (Cleanup) Show version notice
+ 846.1 >>> | 
+ 846.1 >>> | Telepresence 0.108 is available (you're running 0.105). https://www.telepresence.io/reference/changelog
+ 846.1 TEL | (Cleanup) Kill sudo privileges holder
+ 846.1 TEL | (Cleanup) Stop time tracking
+ 846.1 TEL | END SPAN main.py:40(main)  846.0s
+ 846.1 TEL | SPAN SUMMARY:
+ 846.1 TEL |  846.0s main.py:40(main)
+ 846.1 TEL |    1.2s   startup.py:83(set_kube_command)
+ 846.1 TEL |    0.1s     1 kubectl config current-context
+ 846.1 TEL |    0.4s     2 kubectl --context kubernetes-admin@cluster.local version --short
+ 846.1 TEL |    0.1s     3 kubectl --context kubernetes-admin@cluster.local config view -o json
+ 846.1 TEL |    0.2s     4 kubectl --context kubernetes-admin@cluster.local get ns kubesphere-system
+ 846.1 TEL |    0.4s     5 kubectl --context kubernetes-admin@cluster.local api-versions
+ 846.1 TEL |    0.0s   6 ssh -V
+ 846.1 TEL |    0.0s   7 sudo -n echo -n
+ 846.1 TEL |    0.2s   8 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system
+ 846.1 TEL |    1.1s   deployment.py:283(supplant_deployment)
+ 846.1 TEL |    0.2s     remote.py:75(get_deployment_json)
+ 846.1 TEL |    0.2s       9 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-system
+ 846.1 TEL |    0.2s     10 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.5s     11 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s     12 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    4.7s   remote.py:142(get_remote_info)
+ 846.1 TEL |    0.2s     remote.py:75(get_deployment_json)
+ 846.1 TEL |    0.2s       13 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s     14 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    4.3s     remote.py:104(wait_for_pod)
+ 846.1 TEL |    0.2s       15 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       16 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       17 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       18 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       19 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.3s       20 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       21 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       22 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       23 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s       24 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    1.0s   connect.py:37(connect)
+ 846.1 TEL |    0.0s     27 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 846.1 TEL |    0.0s     28 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 846.1 TEL |    0.4s     29 ssh -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null -q
+ 846.1 TEL |    0.7s   remote_env.py:29(get_remote_env)
+ 846.1 TEL |    0.7s     32 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.5s   mount.py:30(mount_remote_volumes)
+ 846.1 TEL |    0.5s     33 sshfs -p 65440 -F /dev/null -oStrictHostKeyChecking=no -oUserKnownHostsFile=/
+ 846.1 TEL |    4.6s   vpn.py:280(connect_sshuttle)
+ 846.1 TEL |    0.0s     vpn.py:77(get_proxy_cidrs)
+ 846.1 TEL |    4.6s     vpn.py:303(connect_sshuttle,sshuttle-wait)
+ 846.1 TEL |    0.1s       35 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0")'
+ 846.1 TEL |    0.2s       36 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-0.a.sanity
+ 846.1 TEL |    0.1s       37 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1")'
+ 846.1 TEL |    1.0s       38 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-1.a.sanity
+ 846.1 TEL |    0.2s       39 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2")'
+ 846.1 TEL |    0.3s       40 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-2.a.sanity
+ 846.1 TEL |    0.1s       41 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3")'
+ 846.1 TEL |    0.1s       42 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-3.a.sanity
+ 846.1 TEL |    0.1s       43 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4")'
+ 846.1 TEL |    1.0s       44 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-4.a.sanity
+ 846.1 TEL |    0.1s       45 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5")'
+ 846.1 TEL |    0.1s       46 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-5.a.sanity
+ 846.1 TEL |    0.1s       47 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6")'
+ 846.1 TEL |    0.1s       48 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-6.a.sanity
+ 846.1 TEL |    0.1s       49 python3 -c 'import socket; socket.gethostbyname("hellotelepresence-7")'
+ 846.1 TEL |    0.1s   50 sudo -n /usr/bin/pkill -HUP mDNSResponder
+ 846.1 TEL |  827.5s   runner.py:726(wait_for_exit)
+ 846.1 TEL |    0.1s     51 sudo -n echo -n
+ 846.1 TEL |    0.1s     52 sudo -n echo -n
+ 846.1 TEL |    0.0s     53 sudo -n echo -n
+ 846.1 TEL |    0.0s     54 sudo -n echo -n
+ 846.1 TEL |    0.0s     55 sudo -n echo -n
+ 846.1 TEL |    0.0s     56 sudo -n echo -n
+ 846.1 TEL |    0.0s     57 sudo -n echo -n
+ 846.1 TEL |    0.0s     58 sudo -n echo -n
+ 846.1 TEL |    0.0s     59 sudo -n echo -n
+ 846.1 TEL |    0.0s     60 sudo -n echo -n
+ 846.1 TEL |    0.0s     61 sudo -n echo -n
+ 846.1 TEL |    0.0s     62 sudo -n echo -n
+ 846.1 TEL |    0.0s     63 sudo -n echo -n
+ 846.1 TEL |    0.0s     64 sudo -n echo -n
+ 846.1 TEL |    0.0s     65 sudo -n echo -n
+ 846.1 TEL |    0.0s     66 sudo -n echo -n
+ 846.1 TEL |    0.0s     67 sudo -n echo -n
+ 846.1 TEL |    0.0s     68 sudo -n echo -n
+ 846.1 TEL |    0.0s     69 sudo -n echo -n
+ 846.1 TEL |    0.0s     70 sudo -n echo -n
+ 846.1 TEL |    0.0s     71 sudo -n echo -n
+ 846.1 TEL |    0.0s     72 sudo -n echo -n
+ 846.1 TEL |    0.0s     73 sudo -n echo -n
+ 846.1 TEL |    0.0s     74 sudo -n echo -n
+ 846.1 TEL |    0.0s     75 sudo -n echo -n
+ 846.1 TEL |    0.0s     76 sudo -n echo -n
+ 846.1 TEL |    0.0s     77 sudo -n echo -n
+ 846.1 TEL |    0.0s     78 sudo -n echo -n
+ 846.1 TEL |    0.1s   79 umount -f /tmp/tel-xt0e3jz6/fs
+ 846.1 TEL |    0.2s   80 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL |    0.2s   81 kubectl --context kubernetes-admin@cluster.local --namespace kubesphere-syste
+ 846.1 TEL | (Cleanup) Remove temporary directory
+ 846.3 TEL | (Cleanup) Save caches
+ 847.1 TEL | (sudo privileges holder thread exiting)
